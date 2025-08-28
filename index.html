@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlocentraAI - Investor Deck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2a9d8f;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .nav-dots {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #2a9d8f;
+        }
+        
+        .dot.active {
+            transform: scale(1.2);
+            background: #2a9d8f;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 60px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            visibility: hidden;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #2a9d8f;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: #e76f51;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            color: #2a9d8f;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            max-width: 800px;
+            color: #555;
+        }
+        
+        .highlight {
+            background-color: #90ee90;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .important {
+            background-color: rgba(144, 238, 144, 0.3);
+            padding: 15px;
+            border-left: 4px solid #2a9d8f;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2a9d8f;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #e76f51;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #e76f51;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: #f4a261;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        th {
+            background: rgba(42, 157, 143, 0.1);
+            color: #2a9d8f;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature i {
+            font-size: 2rem;
+            color: #2a9d8f;
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-item i {
+            color: #2a9d8f;
+            font-size: 1.5rem;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-dots {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        /* Animation for smooth transitions */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide.active {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: #e0e0e0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: #2a9d8f;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>BlocentraAI</span>
+            </div>
+            <div class="nav-dots">
+                <div class="dot active" data-slide="0"></div>
+                <div class="dot" data-slide="1"></div>
+                <div class="dot" data-slide="2"></div>
+                <div class="dot" data-slide="3"></div>
+                <div class="dot" data-slide="4"></div>
+                <div class="dot" data-slide="5"></div>
+                <div class="dot" data-slide="6"></div>
+                <div class="dot" data-slide="7"></div>
+                <div class="dot" data-slide="8"></div>
+                <div class="dot" data-slide="9"></div>
+                <div class="dot" data-slide="10"></div>
+            </div>
+        </header>
+
+        <!-- Slide 1: Title -->
+        <section class="slide active" id="slide1">
+            <h1>BlocentraAI</h1>
+            <h2>Securing the Future of Bitcoin</h2>
+            <p>AI-Powered Insurance & Risk Intelligence</p>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">$7M</div>
+                    <div class="stat-label">Pre-Seed Round</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">$1.2T+</div>
+                    <div class="stat-label">Market Opportunity</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Of Bitcoin Uninsured</div>
+                </div>
+            </div>
+            <div class="important">
+                <p>BlocentraAI addresses the critical need for insurance and risk management in the Bitcoin ecosystem, enabling institutional adoption and protecting investors.</p>
+            </div>
+            <a href="#contact" class="btn">Schedule a Meeting</a>
+        </section>
+
+        <!-- Slide 2: Problem -->
+        <section class="slide" id="slide2">
+            <h2>The $1.2T Sleeping Giant</h2>
+            <p>Bitcoin is the world's largest uninsured asset class</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Billions Lost Annually</h3>
+                    <p>Hacks, scams, and smart contract failures with no recourse for investors</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-ban"></i>
+                    <h3>Institutional Adoption Stalled</h3>
+                    <p>Lack of compliant, institutional-grade risk infrastructure</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-gap"></i>
+                    <h3>Infrastructure Gap</h3>
+                    <p>Traditional insurance can't handle decentralized risk</p>
+                </div>
+            </div>
+            
+            <div class="important">
+                <p><span class="highlight">Result:</span> A colossal barrier to Bitcoin's evolution from store of value to productive financial asset</p>
+            </div>
+        </section>
+
+        <!-- Slide 3: Solution -->
+        <section class="slide" id="slide3">
+            <h2>We Make Bitcoin Safe, Insurable, and Productive</h2>
+            <p>BlocentraAI is a non-custodial, AI-native platform that provides dynamic protection and risk intelligence for the Bitcoin economy</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI-Powered Insurance</h3>
+                    <p>Dynamically priced policies for wallets, smart contracts, and bridges</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Real-Time Risk Engine</h3>
+                    <p>Wallet scoring, behavioral analytics, and anomaly detection</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Predictive Protection</h3>
+                    <p>AI models forecast black swan events and systemic risks</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-coins"></i>
+                    <h3>Yield Activation</h3>
+                    <p>Secure, insured vaults to generate yield on idle BTC (BTCFi)</p>
+                </div>
+            </div>
+            
+            <div class="important">
+                <p>Our AI-native approach allows us to dynamically price risk and provide protection that traditional insurers cannot match</p>
+            </div>
+        </section>
+
+        <!-- Slide 4: Why Now? -->
+        <section class="slide" id="slide4">
+            <h2>The Market is Primed for Disruption</h2>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">$1.2T+</div>
+                    <div class="stat-label">Bitcoin Market Cap</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">$40B+</div>
+                    <div class="stat-label">Crypto Insurance Market by 2030</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">$25B+</div>
+                    <div class="stat-label">Idle BTC to be activated by 2026</div>
+                </div>
+            </div>
+            
+            <h3>Macro Trends Driving Opportunity:</h3>
+            <ul>
+                <li>Accelerating institutional adoption</li>
+                <li>Growing awareness of crypto risks</li>
+                <li>BTCFi and Layer 2 solutions expanding</li>
+                <li>Increasing regulatory clarity demanding transparency</li>
+            </ul>
+            
+            <div class="important">
+                <p>This is a <span class="highlight">once-in-a-decade inflection point</span> for Bitcoin infrastructure</p>
+            </div>
+        </section>
+
+        <!-- Slide 5: Business Model -->
+        <section class="slide" id="slide5">
+            <h2>High-Margin, Scalable Revenue Streams</h2>
+            <p>We capture value across the entire Bitcoin ecosystem</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Insurance Premiums</h3>
+                    <p>1.5-2% annual premium on protected BTC</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>SaaS Subscriptions</h3>
+                    <p>Freemium for retail, tiered plans for institutions</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-code"></i>
+                    <h3>API Licensing</h3>
+                    <p>Usage-based fees for wallets, exchanges, protocols</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-percentage"></i>
+                    <h3>Yield Revenue Sharing</h3>
+                    <p>% share of yields generated in AI-vetted vaults</p>
+                </div>
+            </div>
+            
+            <div class="important">
+                <p>Multiple revenue streams create a <span class="highlight">defensible and scalable business model</span> with high margins</p>
+            </div>
+        </section>
+
+        <!-- Slide 6: Financial Projections -->
+        <section class="slide" id="slide6">
+            <h2>Path to Protecting $27B in BTC & $430M Revenue</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>BTC Protected</th>
+                            <th>Revenue from Premium</th>
+                            <th>Other Revenues</th>
+                            <th>Total Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Year 1</td>
+                            <td>$400M</td>
+                            <td>$3.6M</td>
+                            <td>$1M</td>
+                            <td>$4.6M</td>
+                        </tr>
+                        <tr>
+                            <td>Year 2</td>
+                            <td>$1.6B</td>
+                            <td>$14.4M</td>
+                            <td>$6.5M</td>
+                            <td>$20.9M</td>
+                        </tr>
+                        <tr>
+                            <td>Year 3</td>
+                            <td>$4.5B</td>
+                            <td>$57.6M</td>
+                            <td>$18.5M</td>
+                            <td>$76.1M</td>
+                        </tr>
+                        <tr>
+                            <td>Year 4</td>
+                            <td>$12B</td>
+                            <td>$144M</td>
+                            <td>$40M</td>
+                            <td>$184M</td>
+                        </tr>
+                        <tr>
+                            <td>Year 5</td>
+                            <td>$27B</td>
+                            <td>$360M</td>
+                            <td>$70M</td>
+                            <td>$430M</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="important">
+                <p>Premiums assume a conservative 1.5% average annual rate with <span class="highlight">significant growth potential</span> as we capture market share</p>
+            </div>
+        </section>
+
+        <!-- Slide 7: Competitive Advantage -->
+        <section class="slide" id="slide7">
+            <h2>Why We Will Win</h2>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fab fa-bitcoin"></i>
+                    <h3>Bitcoin-Native First</h3>
+                    <p>Built for Bitcoin's UTXO model, not an Ethereum-afterthought</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-brain"></i>
+                    <h3>Deep AI Integration</h3>
+                    <p>AI is core to our DNA—from underwriting to prediction</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>Full-Stack Solution</h3>
+                    <p>Only platform combining insurance, risk intelligence, and yield</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Regulatory-Ready Design</h3>
+                    <p>Founded in EU (Estonia) with compliance built into the product</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-plug"></i>
+                    <h3>B2B API-First GTM</h3>
+                    <p>Embeds our intelligence layer everywhere, creating network effects</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>First-Mover in BTCFi Risk</h3>
+                    <p>Positioning as essential infrastructure for Bitcoin DeFi</p>
+                </div>
+            </div>
+            
+            <div class="important">
+                <p>Our <span class="highlight">Bitcoin-native approach combined with deep AI integration</span> creates a significant competitive moat</p>
+            </div>
+        </section>
+
+        <!-- Slide 8: Team -->
+        <section class="slide" id="slide8">
+            <h2>Led by Visionary Experts</h2>
+            
+            <div class="feature">
+                <i class="fas fa-user"></i>
+                <h3>Riek Gatluak Geka | Founder & CEO</h3>
+                <p>Crypto security expert, DeFi innovator, and AI strategist with deep understanding of Bitcoin and cross-chain landscape</p>
+            </div>
+            
+            <h3>Post-Funding Hiring Plan:</h3>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-code"></i>
+                    <h4>Engineering & AI</h4>
+                    <p>AI/ML Engineers, Blockchain Devs, DevOps</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Insurance & Risk</h4>
+                    <p>Actuarial Scientists, Underwriters</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Growth</h4>
+                    <p>Compliance, Legal, BD, Partnerships, Marketing</p>
+                </div>
+            </div>
+            
+            <div class="important">
+                <p>We're building a <span class="highlight">world-class team</span> with expertise spanning blockchain, AI, insurance, and compliance</p>
+            </div>
+        </section>
+
+        <!-- Slide 9: The Ask -->
+        <section class="slide" id="slide9">
+            <h2>We Are Raising $7M to Build the Foundation</h2>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-code-branch"></i>
+                    <h3>50% - Product & Tech</h3>
+                    <p>Finalize MVP, deploy AI engine, vault mechanics</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-users"></i>
+                    <h3>25% - Team</h3>
+                    <p>Hire core engineering, risk, and compliance team</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-file-contract"></i>
+                    <h3>15% - Licensing & Regulatory</h3>
+                    <p>Secure EU licensing, sandbox discussions</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-rocket"></i>
+                    <h3>10% - GTM & Pilots</h3>
+                    <p>Launch beta, secure key pilot partnerships</p>
+                </div>
+            </div>
+            
+            <h3>Milestones for the Round (18-24 Month Runway):</h3>
+            <ul>
+                <li>Launch MVP and secure first insurance policies</li>
+                <li>Protect $400M in BTC</li>
+                <li>Onboard 3+ key wallet/custodian API partners</li>
+                <li>Achieve regulatory greenlight in Estonia/EU</li>
+                <li>Generate $4.6M in Year 1 revenue</li>
+            </ul>
+            
+            <div class="important">
+                <p>This funding will establish BlocentraAI as the <span class="highlight">leading risk infrastructure provider</span> for the Bitcoin ecosystem</p>
+            </div>
+        </section>
+
+        <!-- Slide 10: Vision -->
+        <section class="slide" id="slide10">
+            <h2>Unlocking the Full Potential of Bitcoin</h2>
+            
+            <div class="feature">
+                <i class="fas fa-infinity"></i>
+                <p>We are not just another crypto startup. We are building the <span class="highlight">essential trust infrastructure</span> that will allow Bitcoin to become the cornerstone of the global digital economy.</p>
+            </div>
+            
+            <h3>Our Vision:</h3>
+            <p>A future where every Bitcoin transaction is protected, every wallet has a risk score, and idle BTC works safely for its owner.</p>
+            
+            <div class="important">
+                <p>We are making Bitcoin safe for the world - enabling <span class="highlight">trillions of dollars</span> to securely enter the Bitcoin ecosystem</p>
+            </div>
+            
+            <a href="#contact" class="btn">Join Our Mission</a>
+        </section>
+
+        <!-- Slide 11: Contact -->
+        <section class="slide" id="slide11">
+            <h2>Thank You</h2>
+            
+            <div class="feature">
+                <i class="fas fa-handshake"></i>
+                <p>Let's discuss how we can work together to secure the future of Bitcoin</p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-user"></i>
+                    <span>Riek Gatluak Geka | Founder & CEO</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>riekgatluak25@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>+211981211736</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Estonian HQ - Pending Registration</span>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>BlocentraAI: Securing the Future of Bitcoin — with Intelligence, Safety, and Yield.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dots = document.querySelectorAll('.dot');
+            const slides = document.querySelectorAll('.slide');
+            const progressBar = document.getElementById('progressBar');
+            
+            // Function to show a specific slide
+            function showSlide(index) {
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                // Show the selected slide
+                slides[index].classList.add('active');
+                
+                // Update active dot
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                dots[index].classList.add('active');
+                
+                // Update progress bar
+                const progress = (index / (slides.length - 1)) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Update URL hash
+                window.location.hash = `slide${index + 1}`;
+            }
+            
+            // Add click event to dots
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                    showSlide(slideIndex);
+                });
+            });
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                const currentSlide = parseInt(document.querySelector('.dot.active').getAttribute('data-slide'));
+                
+                if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                } else if (e.key === 'Home') {
+                    showSlide(0);
+                } else if (e.key === 'End') {
+                    showSlide(slides.length - 1);
+                }
+            });
+            
+            // Add swipe support for touch devices
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const currentSlide = parseInt(document.querySelector('.dot.active').getAttribute('data-slide'));
+                
+                if (touchEndX < touchStartX - 50 && currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                } else if (touchEndX > touchStartX + 50 && currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            }
+            
+            // Handle mouse wheel navigation
+            let scrollTimeout;
+            document.addEventListener('wheel', function(e) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    const currentSlide = parseInt(document.querySelector('.dot.active').getAttribute('data-slide'));
+                    
+                    if (e.deltaY > 0 && currentSlide < slides.length - 1) {
+                        showSlide(currentSlide + 1);
+                    } else if (e.deltaY < 0 && currentSlide > 0) {
+                        showSlide(currentSlide - 1);
+                    }
+                }, 100);
+            }, { passive: true });
+            
+            // Check URL hash on load
+            window.addEventListener('load', function() {
+                const hash = window.location.hash;
+                if (hash) {
+                    const slideNumber = parseInt(hash.replace('#slide', '')) - 1;
+                    if (!isNaN(slideNumber) && slideNumber >= 0 && slideNumber < slides.length) {
+                        showSlide(slideNumber);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
