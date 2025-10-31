@@ -908,3 +908,118 @@ footer {
         gap: 10px;
     }
 }
+
+/* CEO Section with Image */
+.ceo-section {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: var(--secondary);
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--accent);
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.ceo-image {
+    flex-shrink: 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--accent);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ceo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.ceo-image:hover img {
+    transform: scale(1.05);
+}
+
+.ceo-content {
+    flex: 1;
+}
+
+.ceo-content h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--primary);
+    font-size: 1.3rem;
+}
+
+.ceo-content p {
+    margin-bottom: 20px;
+    font-style: italic;
+    color: var(--dark-gray);
+    line-height: 1.6;
+}
+
+.ceo-social {
+    display: flex;
+    gap: 15px;
+}
+
+.ceo-social a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    color: var(--primary);
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.ceo-social a:hover {
+    background-color: var(--accent);
+    color: var(--secondary);
+    transform: translateY(-3px);
+}
+
+/* Responsive Design for CEO Section */
+@media (max-width: 768px) {
+    .ceo-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+    }
+    
+    .ceo-image {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+    }
+    
+    .ceo-content h4 {
+        font-size: 1.2rem;
+    }
+    
+    .ceo-social {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .ceo-section {
+        padding: 20px;
+    }
+    
+    .ceo-image {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .ceo-content h4 {
+        font-size: 1.1rem;
+    }
+}
